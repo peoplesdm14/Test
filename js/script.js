@@ -20,13 +20,16 @@ const jobPhotos = [
 ];
 
 /* -----------------------------------------------------------
-   SAMPLE REVIEWS — replace with your real customer reviews.
+   REVIEWS — pulled from the Blue Sky Sales Google Business listing.
    Each entry: name, location, rating (1-5), text.
+   Add more any time, or add new ones the same way from the review form.
    ----------------------------------------------------------- */
 const sampleReviews = [
-  { name: "Sample Customer", location: "Mesquite, TX", rating: 5, text: "This is a placeholder review. Swap the entries in sampleReviews (js/script.js) for your real customer feedback." },
-  { name: "Sample Customer", location: "Garland, TX", rating: 5, text: "Another placeholder — great spot to feature a customer quote about a finished remodel or roof job." },
-  { name: "Sample Customer", location: "Balch Springs, TX", rating: 4, text: "Placeholder review. Real reviews submitted through the form below will be emailed to Blue Sky Sales for approval and can be added right here." }
+  { name: "Amanda Burnett", location: "Google review", rating: 5, text: "We ordered some toilet partitions from them and when we went to pick them up, the man that loaded them for us was the nicest person and talking to him was like talking to my grandfather. They were quick to get us our order and just very easy to work with." },
+  { name: "Deborah Long", location: "Google review", rating: 5, text: "Excellent people to work for." },
+  { name: "Summer Ames", location: "Google review", rating: 5, text: "Would highly recommend!" },
+  { name: "Familyistic Our Life", location: "Google review", rating: 5, text: "Fast reliable service." },
+  { name: "Arturo Garcia", location: "Google review", rating: 5, text: "Helpful people here, very gentle highly recommended thank you guys." }
 ];
 
 const OWNER_EMAIL = "peoplesdm14@gmail.com";
@@ -207,11 +210,12 @@ function initStatCounters() {
 
   const animate = (el) => {
     const target = Number(el.dataset.count) || 0;
+    const decimals = el.dataset.count.includes(".") ? el.dataset.count.split(".")[1].length : 0;
     const duration = 1200;
     const start = performance.now();
     function step(now) {
       const progress = Math.min(1, (now - start) / duration);
-      el.textContent = Math.round(target * progress);
+      el.textContent = (target * progress).toFixed(decimals);
       if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
