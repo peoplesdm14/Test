@@ -11,7 +11,7 @@
    to be last. Remove the placeholder entries once you have real photos.
    ----------------------------------------------------------- */
 const jobPhotos = [
-  { image: "images/jobs/placeholder.svg", title: "Add Your First Job Photo", caption: "Replace this card — see instructions below the gallery." },
+  { image: "images/jobs/fixed-ladder-install.jpg", title: "Fixed Access Ladder Installation", caption: "Roof access ladder install, Mesquite, TX." },
   { image: "images/jobs/placeholder.svg", title: "Add A Job Photo", caption: "Kitchen, roof, slab, addition — whatever you finished last." },
   { image: "images/jobs/placeholder.svg", title: "Add A Job Photo", caption: "Before/after pairs work great here too." },
   { image: "images/jobs/placeholder.svg", title: "Add A Job Photo", caption: "Mesquite, Garland, Balch Springs, Sunnyvale..." },
@@ -29,7 +29,7 @@ const jobPhotos = [
 const brands = [
   { name: "Wilkinson Hi-Rise", category: "rep", logo: "images/brands/wilkinson-hi-rise.jpg" },
   { name: "Columbia Chutes", category: "rep", logo: "images/brands/columbia-chutes.jpg" },
-  { name: "Bilco", category: "rep", logo: "images/brands/bilco.jpg" },
+  { name: "Bilco", category: "rep", logo: "images/brands/bilco.jpg", note: "North Texas Rep" },
   { name: "Precision Ladders", category: "rep", logo: "images/brands/precision-ladders.jpg" },
   { name: "Hadrian", category: "supply", logo: "images/brands/hadrian.jpg" },
   { name: "Bobrick", category: "supply", logo: "images/brands/bobrick.jpg" },
@@ -38,6 +38,8 @@ const brands = [
   { name: "Inpro", category: "supply", logo: "images/brands/inpro.jpg" },
   { name: "Larsen's Manufacturing", category: "supply", logo: "images/brands/larsens.jpg" },
   { name: "JL Industries", category: "supply", logo: "images/brands/jl-industries.jpg" },
+  { name: "Salsbury Industries", category: "supply", logo: "images/brands/salsbury.jpg" },
+  { name: "Scranton Products", category: "supply", logo: "images/brands/scranton-products.jpg" },
   { name: "+ More Brands", category: "supply", logo: null }
 ];
 
@@ -52,6 +54,7 @@ function renderBrands() {
       ${b.logo
         ? `<img src="${b.logo}" alt="${b.name}" loading="lazy">`
         : `<span class="brand-wordmark">${b.name}</span>`}
+      ${b.note ? `<span class="brand-tile-note">${b.note}</span>` : ""}
     </div>
   `;
 

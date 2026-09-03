@@ -121,8 +121,8 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 /* Stats */
 .stats { background: var(--sky-900); color: var(--white); padding: 2.4em 0; }
 .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5em; text-align: center; }
-.stat-num { display: block; font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--sun-500); }
-.stat-label { font-size: .85rem; color: rgba(255,255,255,.8); }
+.stat-num, .stat-suffix { display: inline-block; font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--sun-500); }
+.stat-label { display: block; font-size: .85rem; color: rgba(255,255,255,.8); }
 
 /* Sections */
 .section { padding: 5.5em 0; }
@@ -169,12 +169,17 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .brand-group-title:first-of-type { margin-top: 1.5em; }
 .brands-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2em; }
 .brand-tile {
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  position: relative; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
   min-height: 100px; display: flex; align-items: center; justify-content: center;
   padding: 1.2em; transition: transform .15s ease, box-shadow .15s ease;
 }
 .brand-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .brand-tile img { max-height: 60px; width: auto; }
+.brand-tile-note {
+  position: absolute; bottom: 8px; right: 10px; font-size: .66rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .04em; color: var(--sun-600);
+  background: #fff6e5; border-radius: 999px; padding: .2em .6em;
+}
 .brand-wordmark {
   font-family: var(--font-head); font-weight: 700; font-size: 1.05rem;
   color: var(--sky-800); text-align: center; letter-spacing: .01em;
