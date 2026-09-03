@@ -35,6 +35,9 @@ const brands = [
   { name: "Bobrick", category: "supply", logo: "images/brands/bobrick.jpg" },
   { name: "ASI", category: "supply", logo: "images/brands/asi.jpg" },
   { name: "Bradley", category: "supply", logo: "images/brands/bradley.png" },
+  { name: "Inpro", category: "supply", logo: "images/brands/inpro.jpg" },
+  { name: "Larsen's Manufacturing", category: "supply", logo: "images/brands/larsens.jpg" },
+  { name: "JL Industries", category: "supply", logo: "images/brands/jl-industries.jpg" },
   { name: "+ More Brands", category: "supply", logo: null }
 ];
 
