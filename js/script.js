@@ -20,6 +20,42 @@ const jobPhotos = [
 ];
 
 /* -----------------------------------------------------------
+   BRANDS — manufacturers Blue Sky Sales represents and supplies.
+   To use a real logo instead of the text placeholder:
+     1. Drop the logo file into /images/brands/ (e.g. images/brands/bilco.svg)
+     2. Set that brand's "logo" field below to the file path.
+   Leave "logo" as null to keep the styled text placeholder.
+   ----------------------------------------------------------- */
+const brands = [
+  { name: "Wilkinson Hi-Rise", category: "rep", logo: null },
+  { name: "Columbia Chutes", category: "rep", logo: null },
+  { name: "Bilco", category: "rep", logo: null },
+  { name: "Precision Ladders", category: "rep", logo: null },
+  { name: "Hadrian", category: "supply", logo: null },
+  { name: "Bobrick", category: "supply", logo: null },
+  { name: "ASI", category: "supply", logo: null },
+  { name: "+ More Brands", category: "supply", logo: null }
+];
+
+/* ---------------- Brands render ---------------- */
+function renderBrands() {
+  const repGrid = document.getElementById("brandsRepGrid");
+  const supplyGrid = document.getElementById("brandsSupplyGrid");
+  if (!repGrid || !supplyGrid) return;
+
+  const tile = (b) => `
+    <div class="brand-tile">
+      ${b.logo
+        ? `<img src="${b.logo}" alt="${b.name}" loading="lazy">`
+        : `<span class="brand-wordmark">${b.name}</span>`}
+    </div>
+  `;
+
+  repGrid.innerHTML = brands.filter(b => b.category === "rep").map(tile).join("");
+  supplyGrid.innerHTML = brands.filter(b => b.category === "supply").map(tile).join("");
+}
+
+/* -----------------------------------------------------------
    REVIEWS — pulled from the Blue Sky Sales Google Business listing.
    Each entry: name, location, rating (1-5), text.
    Add more any time, or add new ones the same way from the review form.
@@ -245,6 +281,7 @@ function initBackToTop() {
 /* ---------------- Init ---------------- */
 document.addEventListener("DOMContentLoaded", () => {
   renderGallery();
+  renderBrands();
   renderReviews();
   initStarRating();
   initReviewForm();
