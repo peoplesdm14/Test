@@ -281,28 +281,26 @@ function initContactForm() {
 function initLineListModal() {
   const trigger = document.getElementById("lineListTrigger");
   const modal = document.getElementById("lineListModal");
-  if (!trigger || !modal) return;
+  const body = document.getElementById("lineListBody");
+  if (!trigger || !modal || !body) return;
 
-  const PDF_SRC = "documents/blue-sky-sales-line-list.pdf";
+  const IMAGE_SRC = "documents/blue-sky-sales-line-list.png";
+  let loaded = false;
 
   const open = () => {
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
-    // Built + appended fresh on every open, directly under <body> (never
-    // left sitting in the DOM as display:none) — Chromium's native PDF
-    // plugin can silently fail to paint an <embed> that starts out hidden,
-    // even briefly, or is nested inside a positioned/flex ancestor chain.
-    const embed = document.createElement("embed");
-    embed.type = "application/pdf";
-    embed.src = PDF_SRC;
-    embed.className = "pdf-line-list-embed";
-    document.body.appendChild(embed);
+    if (!loaded) {
+      const img = document.createElement("img");
+      img.src = IMAGE_SRC;
+      img.alt = "Blue Sky Sales Full Line List";
+      body.appendChild(img);
+      loaded = true;
+    }
   };
   const close = () => {
     modal.classList.remove("open");
     document.body.style.overflow = "";
-    const embed = document.querySelector(".pdf-line-list-embed");
-    if (embed) embed.remove();
   };
 
   trigger.addEventListener("click", open);

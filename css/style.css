@@ -267,21 +267,25 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .back-to-top.show { opacity: 1; pointer-events: auto; }
 .back-to-top:hover { transform: translateY(-3px); }
 
-/* Line list PDF modal
-   Note: the embed's ancestor chain deliberately avoids flex/transform —
-   Chromium's native PDF plugin can fail to paint an <embed> nested inside
-   a flex/transformed ancestor, even though sizing and visibility are fine. */
-.pdf-modal { display: none; position: fixed; inset: 0; z-index: 200; }
-.pdf-modal.open { display: block; }
+/* Line list PDF modal — shows a rendered image of the flyer (not a native
+   PDF plugin/<embed>), so it works identically in every browser, on mobile,
+   and inside sandboxed preview contexts that block plugin content. */
+.pdf-modal {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  align-items: center; justify-content: center; padding: 3vh 3vw;
+}
+.pdf-modal.open { display: flex; }
 .pdf-modal-backdrop {
   position: absolute; inset: 0; background: rgba(8, 44, 77, .6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
+.pdf-modal-panel {
+  position: relative; width: min(920px, 100%); height: min(88vh, 1100px);
+  background: var(--white); border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,.45); display: flex; flex-direction: column;
+}
 .pdf-modal-bar {
-  position: fixed; top: 6vh; left: 0; right: 0; margin: 0 auto;
-  width: min(920px, 94vw); height: 54px; z-index: 202;
   display: flex; align-items: center; justify-content: space-between; gap: 1em;
-  padding: 0 1.2em; background: var(--sky-900); color: var(--white);
-  border-radius: var(--radius) var(--radius) 0 0; box-sizing: border-box;
+  padding: .8em 1.2em; background: var(--sky-900); color: var(--white); flex-shrink: 0;
 }
 .pdf-modal-bar span { font-weight: 700; font-size: .95rem; }
 .pdf-modal-actions { display: flex; align-items: center; gap: .9em; }
@@ -291,22 +295,14 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
   cursor: pointer; padding: .3em; opacity: .85;
 }
 .pdf-modal-close:hover { opacity: 1; }
-
-/* Appended directly as a <body> child by JS only while the modal is open
-   (never left in the DOM as display:none) — Chromium's native PDF plugin
-   can silently fail to paint an <embed> that starts out hidden, even
-   briefly, or is nested inside a positioned/flex ancestor chain. */
-.pdf-line-list-embed {
-  position: fixed; top: calc(6vh + 54px); left: 0; right: 0; margin: 0 auto;
-  width: min(920px, 94vw); height: calc(min(88vh, 1100px) - 54px);
-  z-index: 201; background: #525659; border: 0;
-  border-radius: 0 0 var(--radius) var(--radius); box-shadow: 0 30px 80px rgba(0,0,0,.45);
-}
+.pdf-modal-body { flex: 1; overflow-y: auto; background: #525659; padding: 1.2em; }
+.pdf-modal-body img { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
 
 @media (max-width: 640px) {
-  .pdf-modal-bar { top: 0; width: 100%; height: 50px; border-radius: 0; }
-  .pdf-modal-bar span { font-size: .8rem; }
-  .pdf-line-list-embed { top: 50px; width: 100%; height: calc(100% - 50px); border-radius: 0; }
+  .pdf-modal { padding: 0; }
+  .pdf-modal-panel { width: 100%; height: 100%; border-radius: 0; }
+  .pdf-modal-bar span { font-size: .82rem; }
+  .pdf-modal-body { padding: .6em; }
 }
 
 /* Responsive */
