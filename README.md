@@ -1,0 +1,39 @@
+# Blue Sky Sales, Inc. — Website
+
+A static website for Blue Sky Sales, Inc., a construction company in Mesquite, Texas.
+
+## Files
+- `index.html` — page content/structure
+- `css/style.css` — all styling
+- `js/script.js` — gallery data, reviews, forms, nav, animations
+- `images/jobs/` — completed-job photos live here
+
+## Adding job photos
+1. Drop your photo file into `images/jobs/` (e.g. `images/jobs/smith-kitchen.jpg`).
+2. Open `js/script.js` and find the `jobPhotos` array near the top.
+3. Add an entry:
+   ```js
+   { image: "images/jobs/smith-kitchen.jpg", title: "Smith Kitchen Remodel", caption: "Mesquite, TX — full kitchen renovation." }
+   ```
+4. Remove the placeholder entries once you have enough real photos. You can add as many as you like — the grid reflows automatically.
+
+## Reviews
+- Sample/placeholder reviews are in the `sampleReviews` array in `js/script.js` — replace the text with your real reviews any time.
+- The "Leave Us a Review" form on the site lets visitors submit a review. On submit it:
+  1. Adds the review to the page immediately, marked "pending review".
+  2. Opens the visitor's email app with the review pre-filled, addressed to your email, so you can read it and decide whether to keep it as a permanent sample review in `js/script.js`.
+- The contact form works the same way (opens an email pre-filled to you) — there's no backend/server required.
+
+## Running locally
+No build step needed. Just open `index.html` in a browser, or serve the folder:
+```
+python3 -m http.server 8000
+```
+then visit `http://localhost:8000`.
+
+## Deploying
+This is a plain static site, so it can be hosted for free on GitHub Pages, Netlify, Vercel, or any static host — just upload the whole folder.
+
+## Customizing
+- Update phone number, email, and address in `index.html` (search for `972` and `peoplesdm14@gmail.com`).
+- Colors and fonts are defined as CSS variables at the top of `css/style.css` (`:root`).

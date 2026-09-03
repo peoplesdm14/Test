@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bfe3ff"/>
+      <stop offset="100%" stop-color="#e7f4ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="450" fill="url(#sky)"/>
+  <rect x="0" y="330" width="600" height="120" fill="#d7dee6"/>
+  <g stroke="#9fb0c3" stroke-width="3" fill="none" stroke-dasharray="10 10">
+    <rect x="40" y="60" width="520" height="360"/>
+  </g>
+  <g fill="#7c93ab">
+    <circle cx="300" cy="180" r="34"/>
+    <rect x="284" y="205" width="32" height="70" rx="6"/>
+  </g>
+  <text x="300" y="320" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#3b5166" text-anchor="middle" font-weight="700">ADD YOUR JOB PHOTO</text>
+  <text x="300" y="350" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#5c7284" text-anchor="middle">Drop a file in images/jobs and update js/script.js</text>
+</svg>
