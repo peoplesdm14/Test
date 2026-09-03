@@ -195,13 +195,24 @@ function initReviewForm() {
   });
 }
 
-/* ---------------- Contact form: mailto ---------------- */
+/* ---------------- Contact form: silent send ----------------
+   Quote requests submit silently in the background (no email app
+   popup) via Web3Forms, a free service that relays the submission
+   straight to QUOTE_EMAIL. This needs a one-time, no-password setup:
+     1. Go to https://web3forms.com and enter wendy@blueskysalesinc.com.
+     2. Web3Forms emails that inbox an access key instantly.
+     3. Paste the key into WEB3FORMS_ACCESS_KEY below.
+   Until a key is set, the form automatically falls back to opening
+   the visitor's email app instead (same as before), so it always works.
+   ----------------------------------------------------------- */
+const WEB3FORMS_ACCESS_KEY = "";
+
 function initContactForm() {
   const form = document.getElementById("contactForm");
   const hint = document.getElementById("contactFormHint");
   if (!form) return;
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const name = form.name.value.trim();
     const phone = form.phone.value.trim();
@@ -210,6 +221,44 @@ function initContactForm() {
     const message = form.message.value.trim();
     if (!name || !email || !message) return;
 
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    if (WEB3FORMS_ACCESS_KEY) {
+      submitBtn.disabled = true;
+      hint.textContent = "Sending...";
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: `New project inquiry from ${name} — ${service}`,
+            from_name: "Blue Sky Sales website",
+            name,
+            phone: phone || "n/a",
+            email,
+            "Project Type": service,
+            message
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          hint.textContent = "Thanks! Your request has been sent to Blue Sky Sales — we'll follow up within one business day.";
+          form.reset();
+        } else {
+          throw new Error(data.message || "Submission failed");
+        }
+      } catch (err) {
+        hint.textContent = "Something went wrong sending that automatically — opening your email app instead.";
+        const mailto = `mailto:${QUOTE_EMAIL}?subject=${encodeURIComponent(`New project inquiry from ${name} — ${service}`)}&body=${encodeURIComponent(`Name: ${name}\nPhone: ${phone || "n/a"}\nEmail: ${email}\nProject Type: ${service}\n\nDetails:\n${message}`)}`;
+        window.location.href = mailto;
+      } finally {
+        submitBtn.disabled = false;
+      }
+      return;
+    }
+
+    // Fallback while no Web3Forms key is configured yet.
     const subject = `New project inquiry from ${name} — ${service}`;
     const body = [
       `Name: ${name}`,
