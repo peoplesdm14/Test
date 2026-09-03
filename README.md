@@ -35,5 +35,6 @@ then visit `http://localhost:8000`.
 This is a plain static site, so it can be hosted for free on GitHub Pages, Netlify, Vercel, or any static host — just upload the whole folder.
 
 ## Customizing
-- Update phone number, email, and address in `index.html` (search for `972` and `peoplesdm14@gmail.com`).
+- Update phone/fax number, email, and address in `index.html` (search for `972`).
+- Quote/contact form submissions go to `wendy@blueskysalesinc.com`; review form submissions go to `peoplesdm14@gmail.com`. Both are set as constants (`QUOTE_EMAIL`, `OWNER_EMAIL`) near the top of `js/script.js`.
 - Colors and fonts are defined as CSS variables at the top of `css/style.css` (`:root`).

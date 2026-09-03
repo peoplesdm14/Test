@@ -68,7 +68,8 @@ const sampleReviews = [
   { name: "Arturo Garcia", location: "Google review", rating: 5, text: "Helpful people here, very gentle highly recommended thank you guys." }
 ];
 
-const OWNER_EMAIL = "peoplesdm14@gmail.com";
+const OWNER_EMAIL = "peoplesdm14@gmail.com"; // reviews submitted via the review form go here
+const QUOTE_EMAIL = "wendy@blueskysalesinc.com"; // "Request a Free Estimate" / contact form inquiries go here
 
 /* ---------------- Gallery render ---------------- */
 function renderGallery() {
@@ -212,7 +213,7 @@ function initContactForm() {
       "Details:",
       message
     ].join("\n");
-    const mailto = `mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailto = `mailto:${QUOTE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailto;
 
     hint.textContent = "Thanks! Your email app should open with your message ready to send to Blue Sky Sales.";
