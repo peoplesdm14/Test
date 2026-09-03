@@ -148,11 +148,9 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
   display: flex; align-items: center; gap: 1.1em; background: var(--white);
   border: 1px solid var(--line); border-radius: var(--radius); padding: 1.6em;
 }
-.leadership-initials {
-  flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%;
-  background: linear-gradient(145deg, var(--sky-600), var(--sky-900));
-  color: var(--sun-500); font-family: var(--font-head); font-weight: 800; font-size: 1.05rem;
-  display: flex; align-items: center; justify-content: center;
+.leadership-photo {
+  flex-shrink: 0; width: 64px; height: 64px; border-radius: 50%;
+  object-fit: cover; border: 2px solid var(--sky-100);
 }
 .leadership-card h4 { margin: 0 0 .15em; font-size: 1.05rem; }
 .leadership-role { margin: 0 0 .35em; color: var(--ink-500); font-size: .85rem; font-weight: 600; }
