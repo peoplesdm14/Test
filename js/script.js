@@ -31,9 +31,10 @@ const brands = [
   { name: "Columbia Chutes", category: "rep", logo: null },
   { name: "Bilco", category: "rep", logo: null },
   { name: "Precision Ladders", category: "rep", logo: null },
-  { name: "Hadrian", category: "supply", logo: null },
-  { name: "Bobrick", category: "supply", logo: null },
-  { name: "ASI", category: "supply", logo: null },
+  { name: "Hadrian", category: "supply", logo: "images/brands/hadrian.jpg" },
+  { name: "Bobrick", category: "supply", logo: "images/brands/bobrick.jpg" },
+  { name: "ASI", category: "supply", logo: "images/brands/asi.jpg" },
+  { name: "Bradley", category: "supply", logo: "images/brands/bradley.png" },
   { name: "+ More Brands", category: "supply", logo: null }
 ];
 

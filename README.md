@@ -1,12 +1,17 @@
 # Blue Sky Sales, Inc. — Website
 
-A static website for Blue Sky Sales, Inc., a construction company in Mesquite, Texas.
+A static website for Blue Sky Sales, Inc., an installation subcontractor and manufacturer's representative in Mesquite, Texas.
 
 ## Files
 - `index.html` — page content/structure
 - `css/style.css` — all styling
-- `js/script.js` — gallery data, reviews, forms, nav, animations
+- `js/script.js` — gallery data, reviews, brands, forms, nav, animations
 - `images/jobs/` — completed-job photos live here
+- `images/brand/` — Blue Sky Sales' own logo (header/footer) and favicon
+- `images/brands/` — manufacturer/partner logos shown on the Brands section
+
+## Brands section
+The `brands` array near the top of `js/script.js` drives the "Brands We Represent & Supply" section. Hadrian, Bobrick, ASI, and Bradley already use real logo files in `images/brands/`. Wilkinson Hi-Rise, Columbia Chutes, Bilco, and Precision Ladders still render as styled text placeholders — send over their logo files, drop them in `images/brands/`, and set that brand's `logo` field to the file path to swap them in.
 
 ## Adding job photos
 1. Drop your photo file into `images/jobs/` (e.g. `images/jobs/smith-kitchen.jpg`).

@@ -85,16 +85,11 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; align-items: center; gap: 1.5em; padding: .8em 24px; }
 .brand { display: flex; align-items: center; gap: .7em; margin-right: auto; }
-.brand-badge {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: linear-gradient(145deg, var(--sky-600), var(--sky-900));
-  color: var(--sun-500); font-family: var(--font-head); font-weight: 800;
-  display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
-  flex-shrink: 0;
+.brand-logo {
+  height: 46px; width: auto; border-radius: 8px; flex-shrink: 0;
 }
 .brand-text { display: flex; flex-direction: column; line-height: 1.2; }
-.brand-text strong { font-family: var(--font-head); color: var(--sky-900); font-size: 1.02rem; }
-.brand-text small { color: var(--ink-500); font-size: .74rem; }
+.brand-text small { color: var(--ink-500); font-size: .74rem; font-weight: 600; }
 
 .main-nav { display: flex; gap: 1.8em; }
 .main-nav a { font-weight: 600; font-size: .92rem; color: var(--ink-700); }
@@ -224,7 +219,6 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .site-footer { background: var(--sky-900); color: rgba(255,255,255,.8); padding: 2.6em 0; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5em; flex-wrap: wrap; }
 .footer-brand { display: flex; align-items: center; gap: .8em; }
-.footer-brand strong { color: var(--white); }
 .footer-brand p { margin: 0; font-size: .8rem; color: rgba(255,255,255,.65); }
 .footer-nav { display: flex; gap: 1.4em; flex-wrap: wrap; }
 .footer-nav a { font-size: .88rem; color: rgba(255,255,255,.8); }
