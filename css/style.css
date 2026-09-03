@@ -135,10 +135,15 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .check-list li { position: relative; padding-left: 1.7em; color: var(--ink-700); font-weight: 500; }
 .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--sky-600); font-weight: 800; }
 
+/* Mission / Approach / Team */
+.mission-wrap { margin-top: 4em; padding-top: 3.5em; border-top: 1px solid var(--line); }
+.mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.2em; }
+.mission-block h3 { font-size: 1.1rem; color: var(--sky-900); }
+.mission-block p { font-size: .93rem; margin: 0; }
+
 /* Leadership */
 .leadership-wrap { margin-top: 4em; padding-top: 3.5em; border-top: 1px solid var(--line); }
-.leadership-title { margin-bottom: 1.6em; }
-.leadership-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4em; max-width: 760px; margin: 0 auto; }
+.leadership-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4em; max-width: 760px; margin: 1.4em auto 0; }
 .leadership-card {
   display: flex; align-items: center; gap: 1.1em; background: var(--white);
   border: 1px solid var(--line); border-radius: var(--radius); padding: 1.6em;
@@ -157,9 +162,16 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6em; margin-top: 1em; }
 .service-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.8em; transition: transform .15s ease, box-shadow .15s ease; }
 .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-.service-icon { font-size: 1.9rem; margin-bottom: .5em; }
 .service-card h3 { font-size: 1.08rem; }
 .service-card p { margin: 0; font-size: .93rem; }
+
+.line-list-cta {
+  margin-top: 2.4em; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.6em 2em; display: flex; align-items: center; justify-content: space-between; gap: 1.6em; flex-wrap: wrap;
+}
+.line-list-cta h3 { margin: 0 0 .2em; font-size: 1.05rem; }
+.line-list-cta p { margin: 0; font-size: .9rem; color: var(--ink-500); }
+.line-list-cta .btn { flex-shrink: 0; }
 
 /* Brands */
 .brand-group-title {
@@ -262,6 +274,7 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
   .services-grid, .gallery-grid, .reviews-grid { grid-template-columns: repeat(2, 1fr); }
   .brands-grid { grid-template-columns: repeat(3, 1fr); }
+  .mission-grid { grid-template-columns: 1fr; gap: 1.6em; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 1.6em; }
 }
 @media (max-width: 720px) {

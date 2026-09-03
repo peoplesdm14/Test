@@ -11,7 +11,7 @@
    to be last. Remove the placeholder entries once you have real photos.
    ----------------------------------------------------------- */
 const jobPhotos = [
-  { image: "images/jobs/fixed-ladder-install.jpg", title: "Fixed Access Ladder Installation", caption: "Roof access ladder install, Mesquite, TX." },
+  { image: "images/jobs/fixed-ladder-install.jpg", title: "Fixed Access Ladder Installation", caption: "Roof access ladder install, McKinney, TX." },
   { image: "images/jobs/placeholder.svg", title: "Add A Job Photo", caption: "Kitchen, roof, slab, addition — whatever you finished last." },
   { image: "images/jobs/placeholder.svg", title: "Add A Job Photo", caption: "Before/after pairs work great here too." },
   { image: "images/jobs/placeholder.svg", title: "Add A Job Photo", caption: "Mesquite, Garland, Balch Springs, Sunnyvale..." },
