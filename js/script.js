@@ -27,9 +27,9 @@ const jobPhotos = [
    Leave "logo" as null to keep the styled text placeholder.
    ----------------------------------------------------------- */
 const brands = [
-  { name: "Wilkinson Hi-Rise", category: "rep", logo: null },
-  { name: "Columbia Chutes", category: "rep", logo: null },
-  { name: "Bilco", category: "rep", logo: null },
+  { name: "Wilkinson Hi-Rise", category: "rep", logo: "images/brands/wilkinson-hi-rise.jpg" },
+  { name: "Columbia Chutes", category: "rep", logo: "images/brands/columbia-chutes.jpg" },
+  { name: "Bilco", category: "rep", logo: "images/brands/bilco.jpg" },
   { name: "Precision Ladders", category: "rep", logo: null },
   { name: "Hadrian", category: "supply", logo: "images/brands/hadrian.jpg" },
   { name: "Bobrick", category: "supply", logo: "images/brands/bobrick.jpg" },
