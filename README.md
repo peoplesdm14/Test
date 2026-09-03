@@ -11,7 +11,7 @@ A static website for Blue Sky Sales, Inc., an installation subcontractor and man
 - `images/brands/` — manufacturer/partner logos shown on the Brands section
 
 ## Brands section
-The `brands` array near the top of `js/script.js` drives the "Brands We Represent & Supply" section. Hadrian, Bobrick, ASI, and Bradley already use real logo files in `images/brands/`. Wilkinson Hi-Rise, Columbia Chutes, Bilco, and Precision Ladders still render as styled text placeholders — send over their logo files, drop them in `images/brands/`, and set that brand's `logo` field to the file path to swap them in.
+The `brands` array near the top of `js/script.js` drives the "Brands We Represent & Supply" section. All current brands (Wilkinson Hi-Rise, Columbia Chutes, Bilco, Precision Ladders, Hadrian, Bobrick, ASI, Bradley) use real logo files in `images/brands/`. To add another brand: drop its logo file in `images/brands/` and add an entry to the array with a `logo` path (or `logo: null` to show a styled text placeholder until you have the file).
 
 ## Adding job photos
 1. Drop your photo file into `images/jobs/` (e.g. `images/jobs/smith-kitchen.jpg`).
