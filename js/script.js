@@ -277,6 +277,41 @@ function initContactForm() {
   });
 }
 
+/* ---------------- Line list PDF modal ---------------- */
+function initLineListModal() {
+  const trigger = document.getElementById("lineListTrigger");
+  const modal = document.getElementById("lineListModal");
+  if (!trigger || !modal) return;
+
+  const PDF_SRC = "documents/blue-sky-sales-line-list.pdf";
+
+  const open = () => {
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    // Built + appended fresh on every open, directly under <body> (never
+    // left sitting in the DOM as display:none) — Chromium's native PDF
+    // plugin can silently fail to paint an <embed> that starts out hidden,
+    // even briefly, or is nested inside a positioned/flex ancestor chain.
+    const embed = document.createElement("embed");
+    embed.type = "application/pdf";
+    embed.src = PDF_SRC;
+    embed.className = "pdf-line-list-embed";
+    document.body.appendChild(embed);
+  };
+  const close = () => {
+    modal.classList.remove("open");
+    document.body.style.overflow = "";
+    const embed = document.querySelector(".pdf-line-list-embed");
+    if (embed) embed.remove();
+  };
+
+  trigger.addEventListener("click", open);
+  modal.querySelectorAll("[data-pdf-close]").forEach(el => el.addEventListener("click", close));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("open")) close();
+  });
+}
+
 /* ---------------- Mobile nav ---------------- */
 function initNav() {
   const toggle = document.getElementById("navToggle");
@@ -343,6 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initStarRating();
   initReviewForm();
   initContactForm();
+  initLineListModal();
   initNav();
   initStatCounters();
   initBackToTop();

@@ -175,7 +175,7 @@
         <h3>Want The Full List?</h3>
         <p>Our complete line card covers everything we sell, install, and service &mdash; from toilet partitions to roofing accessories.</p>
       </div>
-      <a href="documents/blue-sky-sales-line-list.pdf" target="_blank" rel="noopener" class="btn btn-outline">📄 View Our Full Line List (PDF)</a>
+      <button type="button" class="btn btn-outline" id="lineListTrigger">📄 View Our Full Line List (PDF)</button>
     </div>
   </div>
 </section>
@@ -343,6 +343,17 @@
 </footer>
 
 <a href="#top" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
+
+<div class="pdf-modal" id="lineListModal" role="dialog" aria-modal="true" aria-label="Blue Sky Sales Full Line List">
+  <div class="pdf-modal-backdrop" data-pdf-close></div>
+  <div class="pdf-modal-bar">
+    <span>Blue Sky Sales &mdash; Full Line List</span>
+    <div class="pdf-modal-actions">
+      <a href="documents/blue-sky-sales-line-list.pdf" download="Blue-Sky-Sales-Line-List.pdf" class="btn btn-primary btn-sm">⬇ Download</a>
+      <button type="button" class="pdf-modal-close" data-pdf-close aria-label="Close">✕</button>
+    </div>
+  </div>
+</div>
 
 <script src="js/script.js"></script>
 </body>
