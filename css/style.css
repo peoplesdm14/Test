@@ -124,6 +124,12 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .stat-num, .stat-suffix { display: inline-block; font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: var(--sun-500); }
 .stat-label { display: block; font-size: .85rem; color: rgba(255,255,255,.8); }
 
+/* Mini stats — standalone animated numbers used outside the hero stats bar */
+.mini-stat { text-align: center; margin: 0 auto 2.4em; }
+.mini-stat .stat-num, .mini-stat .stat-suffix { font-size: 2.1rem; color: var(--sun-600); }
+.mini-stat-label { display: block; font-size: .82rem; font-weight: 600; color: var(--ink-500); text-transform: uppercase; letter-spacing: .06em; margin-top: .2em; }
+.mini-stat-inline { text-align: left; margin: 0 0 1em; }
+
 /* Sections */
 .section { padding: 5.5em 0; }
 .section-alt { background: var(--sky-50); }
@@ -303,6 +309,13 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
   .pdf-modal-panel { width: 100%; height: 100%; border-radius: 0; }
   .pdf-modal-bar span { font-size: .82rem; }
   .pdf-modal-body { padding: .6em; }
+}
+
+/* Scroll reveal — fade/slide content in as it enters the viewport */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* Responsive */

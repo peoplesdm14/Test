@@ -65,6 +65,10 @@ function renderBrands() {
 
   repGrid.innerHTML = brands.filter(b => b.category === "rep").map(tile).join("");
   supplyGrid.innerHTML = brands.filter(b => b.category === "supply").map(tile).join("");
+
+  // Real brand count for the animated stat below the intro (excludes the "+ More Brands" filler tile).
+  const countEl = document.getElementById("brandCountStat");
+  if (countEl) countEl.dataset.count = String(brands.filter(b => b.logo).length);
 }
 
 /* -----------------------------------------------------------
@@ -364,6 +368,40 @@ function initStatCounters() {
   stats.forEach(el => observer.observe(el));
 }
 
+/* ---------------- Scroll reveal ---------------- */
+function initScrollReveal() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Grid items fade/slide in with a slight stagger per card.
+  const grids = document.querySelectorAll(
+    ".services-grid, .gallery-grid, .reviews-grid, .brands-grid, .leadership-grid, .mission-grid"
+  );
+  grids.forEach(grid => {
+    Array.from(grid.children).forEach((child, i) => {
+      child.classList.add("reveal");
+      child.style.transitionDelay = `${Math.min(i, 6) * 70}ms`;
+    });
+  });
+
+  // Section headers and a few standalone blocks fade in on their own.
+  document.querySelectorAll(
+    ".section > .wrap > .eyebrow, .section > .wrap > h2, .section > .wrap > .section-sub, " +
+    ".about-media-box, .about-copy, .mini-stat:not(.mini-stat-inline), .line-list-cta, .review-form-wrap, " +
+    ".cta-band-inner, .contact-grid > *"
+  ).forEach(el => el.classList.add("reveal"));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+}
+
 /* ---------------- Back to top ---------------- */
 function initBackToTop() {
   const btn = document.getElementById("backToTop");
@@ -384,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLineListModal();
   initNav();
   initStatCounters();
+  initScrollReveal();
   initBackToTop();
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
