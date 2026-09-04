@@ -25,21 +25,23 @@ const jobPhotos = [
      1. Drop the logo file into /images/brands/ (e.g. images/brands/bilco.svg)
      2. Set that brand's "logo" field below to the file path.
    Leave "logo" as null to keep the styled text placeholder.
+   "url" (optional) makes the tile clickable, opening that brand's
+   official website in a new tab.
    ----------------------------------------------------------- */
 const brands = [
-  { name: "Bilco", category: "rep", logo: "images/brands/bilco.jpg", note: "North Texas Rep" },
-  { name: "Precision Ladders", category: "rep", logo: "images/brands/precision-ladders.jpg", note: "North Texas Rep" },
-  { name: "Wilkinson Hi-Rise", category: "supply", logo: "images/brands/wilkinson-hi-rise.jpg" },
-  { name: "Columbia Chutes", category: "supply", logo: "images/brands/columbia-chutes.jpg" },
-  { name: "Hadrian", category: "supply", logo: "images/brands/hadrian.jpg" },
-  { name: "Bobrick", category: "supply", logo: "images/brands/bobrick.jpg" },
-  { name: "ASI", category: "supply", logo: "images/brands/asi.jpg" },
-  { name: "Bradley", category: "supply", logo: "images/brands/bradley.png" },
-  { name: "Inpro", category: "supply", logo: "images/brands/inpro.jpg" },
-  { name: "Larsen's Manufacturing", category: "supply", logo: "images/brands/larsens.jpg" },
-  { name: "JL Industries", category: "supply", logo: "images/brands/jl-industries.jpg" },
-  { name: "Salsbury Industries", category: "supply", logo: "images/brands/salsbury.jpg" },
-  { name: "Scranton Products", category: "supply", logo: "images/brands/scranton-products.jpg" },
+  { name: "Bilco", category: "rep", logo: "images/brands/bilco.jpg", note: "North Texas Rep", url: "https://www.bilco.com/" },
+  { name: "Precision Ladders", category: "rep", logo: "images/brands/precision-ladders.jpg", note: "North Texas Rep", url: "https://precisionladders.com/" },
+  { name: "Wilkinson Hi-Rise", category: "supply", logo: "images/brands/wilkinson-hi-rise.jpg", url: "https://www.whrise.com/" },
+  { name: "Columbia Chutes", category: "supply", logo: "images/brands/columbia-chutes.jpg", url: "https://columbiachutes.com/" },
+  { name: "Hadrian", category: "supply", logo: "images/brands/hadrian.jpg", url: "https://www.hadrian-inc.com/us/en.html" },
+  { name: "Bobrick", category: "supply", logo: "images/brands/bobrick.jpg", url: "https://www.bobrick.com/" },
+  { name: "ASI", category: "supply", logo: "images/brands/asi.jpg", url: "https://americanspecialties.com/" },
+  { name: "Bradley", category: "supply", logo: "images/brands/bradley.png", url: "https://www.bradleycorp.com/" },
+  { name: "Inpro", category: "supply", logo: "images/brands/inpro.jpg", url: "https://www.inprocorp.com/" },
+  { name: "Larsen's Manufacturing", category: "supply", logo: "images/brands/larsens.jpg", url: "https://www.larsensmfg.com/" },
+  { name: "JL Industries", category: "supply", logo: "images/brands/jl-industries.jpg", url: "https://thejlindustries.com/" },
+  { name: "Salsbury Industries", category: "supply", logo: "images/brands/salsbury.jpg", url: "https://www.salsburyindustries.com/" },
+  { name: "Scranton Products", category: "supply", logo: "images/brands/scranton-products.jpg", url: "https://www.scrantonproducts.com/" },
   { name: "+ More Brands", category: "supply", logo: null }
 ];
 
@@ -49,14 +51,17 @@ function renderBrands() {
   const supplyGrid = document.getElementById("brandsSupplyGrid");
   if (!repGrid || !supplyGrid) return;
 
-  const tile = (b) => `
-    <div class="brand-tile">
+  const tile = (b) => {
+    const inner = `
       ${b.logo
         ? `<img src="${b.logo}" alt="${b.name}" loading="lazy">`
         : `<span class="brand-wordmark">${b.name}</span>`}
       ${b.note ? `<span class="brand-tile-note">${b.note}</span>` : ""}
-    </div>
-  `;
+    `;
+    return b.url
+      ? `<a class="brand-tile" href="${b.url}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${b.name}'s website">${inner}</a>`
+      : `<div class="brand-tile">${inner}</div>`;
+  };
 
   repGrid.innerHTML = brands.filter(b => b.category === "rep").map(tile).join("");
   supplyGrid.innerHTML = brands.filter(b => b.category === "supply").map(tile).join("");
