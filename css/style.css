@@ -218,16 +218,6 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .review-card p.review-text { font-style: italic; color: var(--ink-700); }
 .review-card .reviewer { font-weight: 700; color: var(--sky-900); font-size: .92rem; }
 .review-card .reviewer span { display: block; font-weight: 400; color: var(--ink-500); font-size: .82rem; }
-.review-card.pending { border-style: dashed; border-color: var(--sun-500); background: #fffaf0; }
-.review-card.pending .reviewer::after { content: " · pending review"; color: var(--sun-600); font-weight: 600; font-size: .78rem; }
-
-.review-form-wrap { max-width: 640px; margin: 0 auto; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 2.2em; box-shadow: var(--shadow); }
-.review-form-wrap h3 { text-align: center; }
-.review-form-sub { text-align: center; font-size: .9rem; }
-
-.star-rating { font-size: 1.7rem; color: #d7dee6; display: inline-flex; gap: .1em; cursor: pointer; }
-.star-rating span { transition: color .1s ease; }
-.star-rating span.active { color: var(--sun-500); }
 
 /* Forms */
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; }

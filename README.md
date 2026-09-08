@@ -23,11 +23,9 @@ The `brands` array near the top of `js/script.js` drives the "Brands We Represen
 4. Remove the placeholder entries once you have enough real photos. You can add as many as you like — the grid reflows automatically.
 
 ## Reviews
-- Sample/placeholder reviews are in the `sampleReviews` array in `js/script.js` — replace the text with your real reviews any time.
-- The "Leave Us a Review" form on the site lets visitors submit a review. On submit it:
-  1. Adds the review to the page immediately, marked "pending review".
-  2. Opens the visitor's email app with the review pre-filled, addressed to your email, so you can read it and decide whether to keep it as a permanent sample review in `js/script.js`.
-- The contact/quote form ("Request a Free Estimate") sends silently in the background via Web3Forms — see "Silent quote-form submission" below. The review form still opens an email pre-filled to you; no backend/server is required for either.
+- Real review text (copied from the Blue Sky Sales Google Business listing) is in the `sampleReviews` array in `js/script.js` — reviewer names are shown as "Customer" rather than their real name. Add more any time by adding another entry.
+- This is a static, display-only list — it does not pull live from Google, and there is no visitor-facing submission form. To add a new review, edit the array directly.
+- The contact/quote form ("Request a Free Estimate") sends silently in the background via Web3Forms — see "Silent quote-form submission" below.
 
 ## Silent quote-form submission (Web3Forms)
 The contact form submits in the background with no email app popup, straight to `wendy@blueskysalesinc.com`, using [Web3Forms](https://web3forms.com) (free, no server needed). This needs one manual, one-time step that only Blue Sky Sales can do (it has to go to Wendy's inbox):
@@ -56,5 +54,5 @@ This is a plain static site, so it can be hosted for free on GitHub Pages, Netli
 
 ## Customizing
 - Update phone/fax number, email, and address in `index.html` (search for `972`).
-- Quote/contact form submissions go to `wendy@blueskysalesinc.com`; review form submissions go to `peoplesdm14@gmail.com`. Both are set as constants (`QUOTE_EMAIL`, `OWNER_EMAIL`) near the top of `js/script.js`.
+- Quote/contact form submissions go to `wendy@blueskysalesinc.com`, set as the `QUOTE_EMAIL` constant near the top of `js/script.js`.
 - Colors and fonts are defined as CSS variables at the top of `css/style.css` (`:root`).

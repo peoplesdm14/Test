@@ -72,19 +72,18 @@ function renderBrands() {
 }
 
 /* -----------------------------------------------------------
-   REVIEWS — pulled from the Blue Sky Sales Google Business listing.
-   Each entry: name, location, rating (1-5), text.
-   Add more any time, or add new ones the same way from the review form.
+   REVIEWS — real review text from the Blue Sky Sales Google Business
+   listing. Names are shown as "Customer" rather than the real reviewer
+   name. Add more any time by adding another entry below.
    ----------------------------------------------------------- */
 const sampleReviews = [
-  { name: "Amanda Burnett", location: "Google review", rating: 5, text: "We ordered some toilet partitions from them and when we went to pick them up, the man that loaded them for us was the nicest person and talking to him was like talking to my grandfather. They were quick to get us our order and just very easy to work with." },
-  { name: "Deborah Long", location: "Google review", rating: 5, text: "Excellent people to work for." },
-  { name: "Summer Ames", location: "Google review", rating: 5, text: "Would highly recommend!" },
-  { name: "Familyistic Our Life", location: "Google review", rating: 5, text: "Fast reliable service." },
-  { name: "Arturo Garcia", location: "Google review", rating: 5, text: "Helpful people here, very gentle highly recommended thank you guys." }
+  { name: "Customer", location: "Google review", rating: 5, text: "We ordered some toilet partitions from them and when we went to pick them up, the man that loaded them for us was the nicest person and talking to him was like talking to my grandfather. They were quick to get us our order and just very easy to work with." },
+  { name: "Customer", location: "Google review", rating: 5, text: "Excellent people to work for." },
+  { name: "Customer", location: "Google review", rating: 5, text: "Would highly recommend!" },
+  { name: "Customer", location: "Google review", rating: 5, text: "Fast reliable service." },
+  { name: "Customer", location: "Google review", rating: 5, text: "Helpful people here, very gentle highly recommended thank you guys." }
 ];
 
-const OWNER_EMAIL = "peoplesdm14@gmail.com"; // reviews submitted via the review form go here
 const QUOTE_EMAIL = "wendy@blueskysalesinc.com"; // "Request a Free Estimate" / contact form inquiries go here
 
 /* -----------------------------------------------------------
@@ -122,100 +121,16 @@ function starString(rating) {
   return "★★★★★☆☆☆☆☆".slice(5 - r, 10 - r);
 }
 
-function getStoredReviews() {
-  try {
-    return JSON.parse(localStorage.getItem("bss_pending_reviews") || "[]");
-  } catch (e) {
-    return [];
-  }
-}
-
 function renderReviews() {
   const grid = document.getElementById("reviewsGrid");
   if (!grid) return;
-  const pending = getStoredReviews();
-
-  const sampleHtml = sampleReviews.map(r => `
+  grid.innerHTML = sampleReviews.map(r => `
     <div class="review-card">
       <div class="stars">${starString(r.rating)}</div>
       <p class="review-text">&ldquo;${r.text}&rdquo;</p>
       <p class="reviewer">${r.name}<span>${r.location || ""}</span></p>
     </div>
   `).join("");
-
-  const pendingHtml = pending.map(r => `
-    <div class="review-card pending">
-      <div class="stars">${starString(r.rating)}</div>
-      <p class="review-text">&ldquo;${r.text}&rdquo;</p>
-      <p class="reviewer">${r.name}<span>${r.location || ""}</span></p>
-    </div>
-  `).join("");
-
-  grid.innerHTML = sampleHtml + pendingHtml;
-}
-
-/* ---------------- Star rating widget ---------------- */
-function initStarRating() {
-  const widget = document.getElementById("starRating");
-  const hidden = document.getElementById("revRating");
-  if (!widget || !hidden) return;
-
-  function paint(rating) {
-    widget.querySelectorAll("span").forEach(s => {
-      s.classList.toggle("active", Number(s.dataset.star) <= rating);
-    });
-  }
-
-  paint(Number(widget.dataset.rating));
-
-  widget.querySelectorAll("span").forEach(star => {
-    star.addEventListener("click", () => {
-      const rating = Number(star.dataset.star);
-      widget.dataset.rating = rating;
-      hidden.value = rating;
-      paint(rating);
-    });
-    star.addEventListener("mouseenter", () => paint(Number(star.dataset.star)));
-  });
-  widget.addEventListener("mouseleave", () => paint(Number(widget.dataset.rating)));
-}
-
-/* ---------------- Review form: save locally + email owner ---------------- */
-function initReviewForm() {
-  const form = document.getElementById("reviewForm");
-  const hint = document.getElementById("reviewFormHint");
-  if (!form) return;
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = form.name.value.trim();
-    const location = form.location.value.trim();
-    const rating = Number(form.rating.value) || 5;
-    const text = form.review.value.trim();
-    if (!name || !text) return;
-
-    const entry = { name, location, rating, text, date: new Date().toISOString() };
-    const stored = getStoredReviews();
-    stored.push(entry);
-    localStorage.setItem("bss_pending_reviews", JSON.stringify(stored));
-    renderReviews();
-
-    const subject = `New website review from ${name} (${rating}★)`;
-    const body = [
-      `Name: ${name}`,
-      `Location: ${location || "n/a"}`,
-      `Rating: ${rating} / 5`,
-      "",
-      "Review:",
-      text
-    ].join("\n");
-    const mailto = `mailto:${OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-
-    form.reset();
-    initStarRating();
-    hint.textContent = "Thanks! Your review was added below and your email app should open so you can send it to us directly.";
-  });
 }
 
 /* ---------------- Contact form: silent send ----------------
@@ -606,7 +521,7 @@ function initScrollReveal() {
   // Section headers and a few standalone blocks fade in on their own.
   document.querySelectorAll(
     ".section > .wrap > .eyebrow, .section > .wrap > h2, .section > .wrap > .section-sub, " +
-    ".about-media-box, .about-copy, .mini-stat:not(.mini-stat-inline), .line-list-cta, .review-form-wrap, " +
+    ".about-media-box, .about-copy, .mini-stat:not(.mini-stat-inline), .line-list-cta, " +
     ".cta-band-inner, .contact-grid > *"
   ).forEach(el => el.classList.add("reveal"));
 
@@ -636,8 +551,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderGallery();
   renderBrands();
   renderReviews();
-  initStarRating();
-  initReviewForm();
   initContactForm();
   initLineListModal();
   initNav();
