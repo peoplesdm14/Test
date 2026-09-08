@@ -180,7 +180,7 @@
         <h3>Want The Full List?</h3>
         <p>Our complete line card covers everything we sell, install, and service &mdash; from toilet partitions to roofing accessories.</p>
       </div>
-      <button type="button" class="btn btn-outline" id="lineListTrigger">📄 View Our Full Line List (PDF)</button>
+      <button type="button" class="btn btn-outline" id="lineListTrigger">🔍 Browse Our Full Line List</button>
     </div>
   </div>
 </section>
@@ -383,11 +383,19 @@
     <div class="pdf-modal-bar">
       <span>Blue Sky Sales &mdash; Full Line List</span>
       <div class="pdf-modal-actions">
-        <a href="documents/blue-sky-sales-line-list.pdf" download="Blue-Sky-Sales-Line-List.pdf" class="btn btn-primary btn-sm">⬇ Download</a>
+        <a href="documents/blue-sky-sales-line-list.pdf" download="Blue-Sky-Sales-Line-List.pdf" class="btn btn-primary btn-sm">⬇ Download PDF</a>
         <button type="button" class="pdf-modal-close" data-pdf-close aria-label="Close">✕</button>
       </div>
     </div>
-    <div class="pdf-modal-body" id="lineListBody"></div>
+    <div class="pdf-modal-body" id="lineListBody">
+      <p class="ll-intro">We specialize in all forms of handicap renovations and toilet room expansions &mdash; including repair of existing toilet partitions and accessories, and repainting of toilet partitions at your location.</p>
+      <div class="ll-controls">
+        <input type="text" class="ll-search" id="lineListSearch" placeholder="Search the line list&hellip; e.g. &ldquo;chute&rdquo;, &ldquo;grab bars&rdquo;, &ldquo;roof hatch&rdquo;">
+        <div class="ll-chips" id="lineListChips"></div>
+      </div>
+      <p class="ll-empty" id="lineListEmpty" hidden>No matches &mdash; try a different search, or <button type="button" id="lineListClear">clear filters</button>.</p>
+      <div class="ll-grid" id="lineListGrid"></div>
+    </div>
   </div>
 </div>
 

@@ -325,26 +325,110 @@ function initContactForm() {
   });
 }
 
-/* ---------------- Line list PDF modal ---------------- */
+/* -----------------------------------------------------------
+   LINE LIST — everything Blue Sky Sales sells, installs, and services.
+   Powers the searchable/filterable list in the "Browse Our Full Line
+   List" modal. Mirrors documents/blue-sky-sales-line-list.pdf — update
+   both if the product lineup changes.
+   ----------------------------------------------------------- */
+const lineListCategories = [
+  { category: "Toilet Partitions", note: "Global Stocking Distributor", items: ["Steel-baked enamel", "Stainless steel", "Plastic laminate", "Phenolic", "Solid plastic"] },
+  { category: "Washroom Accessories", note: "Bobrick Stocking Distributor", items: ["Accessories for Physically Handicapped", "Dispensers – Soap, Lotion, Toilet Paper", "Feminine Napkin Dispensers & Waste Receptacle", "Grab Bars, Mirrors, Paper Towel Dispenser & Waste Receptacle", "Hand Dryers"] },
+  { category: "Visual Display", items: ["Markerboards", "Tackboards", "Chalkboards", "Directory Boards", "Display Cases", "Dry Erase Wallcovering", "Projection Screens", "TV Mounting Brackets", "Projector Mounts"] },
+  { category: "Impact Wall Protection", items: ["Corner Guards", "Bumper Rail/Crash Rail", "Hand Rail", "Door Protection"] },
+  { category: "Building Accessories", items: ["Flagpoles", "Banner Poles", "Crowd Control – Post & Panels", "Trash Receptacles", "Ashtrays", "Louvers & Vents"] },
+  { category: "Specialty Doors", items: ["Access Doors", "Dock Door Curtains & Dock Bumpers", "Impact Traffic Doors", "Rolling Doors", "Roof Hatches"] },
+  { category: "Entrance Mats & Specialized Flooring", items: ["Athletic Flooring", "Floor Grid Systems", "Kitchen Matting"] },
+  { category: "Fire Protection Equipment", items: ["Automatic Fire Vents", "Fire Extinguishers", "Fire Extinguisher Cabinets"] },
+  { category: "Lockers & Wire Mesh Partitions", items: ["Folding Gates", "Personal Storage Lockers"] },
+  { category: "Mail Boxes – Parcel Lockers", items: ["Private Mail Service", "United States Post Office Approved Units", "Mail Chutes"] },
+  { category: "Partitions Systems", items: ["Operable Walls", "Room Dividers", "Accordian Doors", "Cubicle Curtain Track & Curtains/IV Track"] },
+  { category: "Pneumatic Tube Conveyor", items: ["Air Chute Systems"] },
+  { category: "Roofing Accessories", items: ["Fry Reglet & Flashing", "Roof Hatches", "Ladders", "Skylights"] },
+  { category: "Signs – Identifying Devices", items: ["Building Directories", "Directory Boards", "Interior/Exterior Signage", "Letters & Plaques"] },
+  { category: "Stair Products", items: ["Industrial", "Safety Resurfacer", "Stair Treads & Nosing (Anti-slip)"] },
+  { category: "Trash & Linen Chutes", items: ["Trash Chutes", "Linen Chutes", "Chute Doors & Intake Stations"] }
+];
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function highlight(text, query) {
+  const safe = escapeHtml(text);
+  if (!query) return safe;
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return safe.replace(new RegExp(`(${escapedQuery})`, "ig"), "<mark>$1</mark>");
+}
+
+/* ---------------- Line list modal ---------------- */
 function initLineListModal() {
   const trigger = document.getElementById("lineListTrigger");
   const modal = document.getElementById("lineListModal");
-  const body = document.getElementById("lineListBody");
-  if (!trigger || !modal || !body) return;
+  const grid = document.getElementById("lineListGrid");
+  const chipsEl = document.getElementById("lineListChips");
+  const searchInput = document.getElementById("lineListSearch");
+  const emptyState = document.getElementById("lineListEmpty");
+  const clearBtn = document.getElementById("lineListClear");
+  if (!trigger || !modal || !grid || !chipsEl || !searchInput) return;
 
-  const IMAGE_SRC = "documents/blue-sky-sales-line-list.png";
-  let loaded = false;
+  let activeCategory = null;
+  let built = false;
+
+  function renderChips() {
+    const allChip = `<button type="button" class="ll-chip active" data-category="">All Categories</button>`;
+    const chips = lineListCategories.map(c =>
+      `<button type="button" class="ll-chip" data-category="${escapeHtml(c.category)}">${escapeHtml(c.category)}</button>`
+    ).join("");
+    chipsEl.innerHTML = allChip + chips;
+    chipsEl.querySelectorAll(".ll-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        activeCategory = chip.dataset.category || null;
+        chipsEl.querySelectorAll(".ll-chip").forEach(c => c.classList.toggle("active", c === chip));
+        renderResults();
+      });
+    });
+  }
+
+  function renderResults() {
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    const cardsHtml = lineListCategories.map(cat => {
+      if (activeCategory && cat.category !== activeCategory) return "";
+
+      const categoryMatches = !query || cat.category.toLowerCase().includes(query);
+      const items = categoryMatches
+        ? cat.items
+        : cat.items.filter(item => item.toLowerCase().includes(query));
+
+      if (!items.length) return "";
+      visibleCount++;
+
+      const itemsHtml = items.map(item => `<li>${highlight(item, query)}</li>`).join("");
+      return `
+        <div class="ll-card">
+          <h3 class="ll-card-title">${highlight(cat.category, query)}</h3>
+          ${cat.note ? `<span class="ll-card-note">${escapeHtml(cat.note)}</span>` : ""}
+          <ul>${itemsHtml}</ul>
+        </div>
+      `;
+    }).join("");
+
+    grid.innerHTML = cardsHtml;
+    emptyState.hidden = visibleCount !== 0;
+    grid.hidden = visibleCount === 0;
+  }
 
   const open = () => {
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
-    if (!loaded) {
-      const img = document.createElement("img");
-      img.src = IMAGE_SRC;
-      img.alt = "Blue Sky Sales Full Line List";
-      body.appendChild(img);
-      loaded = true;
+    if (!built) {
+      renderChips();
+      renderResults();
+      built = true;
     }
+    searchInput.focus();
   };
   const close = () => {
     modal.classList.remove("open");
@@ -356,6 +440,16 @@ function initLineListModal() {
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && modal.classList.contains("open")) close();
   });
+
+  searchInput.addEventListener("input", renderResults);
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      activeCategory = null;
+      chipsEl.querySelectorAll(".ll-chip").forEach(c => c.classList.toggle("active", !c.dataset.category));
+      renderResults();
+    });
+  }
 }
 
 /* ---------------- Mobile nav ---------------- */

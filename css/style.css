@@ -301,9 +301,9 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .back-to-top.show { opacity: 1; pointer-events: auto; }
 .back-to-top:hover { transform: translateY(-3px); }
 
-/* Line list PDF modal — shows a rendered image of the flyer (not a native
-   PDF plugin/<embed>), so it works identically in every browser, on mobile,
-   and inside sandboxed preview contexts that block plugin content. */
+/* Line list modal — an interactive, filterable/searchable version of the
+   flyer (the flattened PDF is still offered as a download for anyone who
+   wants the printable version for a bid file). */
 .pdf-modal {
   display: none; position: fixed; inset: 0; z-index: 200;
   align-items: center; justify-content: center; padding: 3vh 3vw;
@@ -313,7 +313,7 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
   position: absolute; inset: 0; background: rgba(8, 44, 77, .6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
 .pdf-modal-panel {
-  position: relative; width: min(920px, 100%); height: min(88vh, 1100px);
+  position: relative; width: min(1040px, 100%); height: min(88vh, 1100px);
   background: var(--white); border-radius: var(--radius); overflow: hidden;
   box-shadow: 0 30px 80px rgba(0,0,0,.45); display: flex; flex-direction: column;
 }
@@ -322,21 +322,56 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
   padding: .8em 1.2em; background: var(--sky-900); color: var(--white); flex-shrink: 0;
 }
 .pdf-modal-bar span { font-weight: 700; font-size: .95rem; }
-.pdf-modal-actions { display: flex; align-items: center; gap: .9em; }
-.pdf-modal-actions .btn-sm { padding: .5em 1.1em; font-size: .85rem; }
+.pdf-modal-actions { display: flex; align-items: center; gap: .9em; flex-shrink: 0; }
+.pdf-modal-actions .btn-sm { padding: .5em 1.1em; font-size: .85rem; white-space: nowrap; }
 .pdf-modal-close {
   background: none; border: none; color: var(--white); font-size: 1.2rem; line-height: 1;
   cursor: pointer; padding: .3em; opacity: .85;
 }
 .pdf-modal-close:hover { opacity: 1; }
-.pdf-modal-body { flex: 1; overflow-y: auto; background: #525659; padding: 1.2em; }
-.pdf-modal-body img { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+.pdf-modal-body { flex: 1; overflow-y: auto; background: var(--sky-50); padding: 1.4em 1.6em 2em; }
+
+.ll-intro { font-style: italic; font-size: .88rem; color: var(--ink-500); max-width: 760px; margin: 0 0 1.2em; }
+
+.ll-controls { position: sticky; top: -1.4em; z-index: 3; background: var(--sky-50); padding: 1.4em 0 1em; margin: -1.4em 0 0; }
+.ll-search {
+  width: 100%; padding: .8em 1em; border: 1px solid var(--line); border-radius: 10px;
+  font-family: var(--font-body); font-size: .95rem; color: var(--ink-900); background: var(--white);
+  margin-bottom: .8em;
+}
+.ll-search:focus { outline: 2px solid var(--sky-500); outline-offset: 1px; }
+.ll-chips { display: flex; flex-wrap: wrap; gap: .5em; }
+.ll-chip {
+  border: 1.5px solid var(--line); background: var(--white); color: var(--sky-800);
+  border-radius: 999px; padding: .4em 1em; font-family: var(--font-body); font-size: .8rem; font-weight: 600;
+  cursor: pointer; transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.ll-chip:hover { border-color: var(--sky-500); }
+.ll-chip.active { background: var(--sky-700); border-color: var(--sky-700); color: var(--white); }
+
+.ll-empty { text-align: center; color: var(--ink-500); font-size: .92rem; padding: 2em 0; }
+.ll-empty button { border: none; background: none; color: var(--sky-700); font-weight: 700; cursor: pointer; padding: 0; font: inherit; text-decoration: underline; }
+
+.ll-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; align-content: start; }
+.ll-card { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 1.2em 1.4em; }
+.ll-card-title { font-size: 1rem; margin: 0 0 .2em; color: var(--sky-900); }
+.ll-card-note {
+  display: inline-block; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--sun-600); background: #fff6e5; border-radius: 999px; padding: .15em .6em; margin-bottom: .7em;
+}
+.ll-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .4em; }
+.ll-card li { position: relative; padding-left: 1.1em; font-size: .88rem; color: var(--ink-700); }
+.ll-card li::before { content: "•"; position: absolute; left: 0; color: var(--sky-500); font-weight: 700; }
+.ll-card li mark { background: #fff0c2; color: inherit; border-radius: 3px; padding: 0 .1em; }
 
 @media (max-width: 640px) {
   .pdf-modal { padding: 0; }
   .pdf-modal-panel { width: 100%; height: 100%; border-radius: 0; }
+  .pdf-modal-bar { flex-wrap: wrap; }
   .pdf-modal-bar span { font-size: .82rem; }
-  .pdf-modal-body { padding: .6em; }
+  .pdf-modal-actions .btn-sm { font-size: .78rem; padding: .45em .85em; }
+  .pdf-modal-body { padding: 1.1em 1em 2em; }
+  .ll-grid { grid-template-columns: 1fr; }
 }
 
 /* Scroll reveal — fade/slide content in as it enters the viewport */
