@@ -219,16 +219,51 @@ const WEB3FORMS_ACCESS_KEY = "";
 function initContactForm() {
   const form = document.getElementById("contactForm");
   const hint = document.getElementById("contactFormHint");
+  const serviceSelect = document.getElementById("cService");
+  const revealFields = document.getElementById("contactRevealFields");
+  const successScreen = document.getElementById("contactFormSuccess");
+  const restartBtn = document.getElementById("contactFormRestart");
   if (!form) return;
+
+  if (serviceSelect && revealFields) {
+    serviceSelect.addEventListener("change", () => {
+      revealFields.classList.toggle("shown", serviceSelect.value !== "");
+    });
+  }
+
+  if (restartBtn && successScreen) {
+    restartBtn.addEventListener("click", () => {
+      successScreen.classList.remove("active");
+      form.style.display = "";
+      if (revealFields) revealFields.classList.remove("shown");
+    });
+  }
+
+  const showSuccess = () => {
+    form.reset();
+    if (revealFields) revealFields.classList.remove("shown");
+    if (successScreen) {
+      form.style.display = "none";
+      successScreen.classList.add("active");
+    }
+  };
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const name = form.name.value.trim();
     const phone = form.phone.value.trim();
     const email = form.email.value.trim();
-    const service = form.service.value;
+    const service = form.service.value || "General Inquiry";
+    const qty = form.qty.value.trim();
+    const needBy = form.needBy.value.trim();
     const message = form.message.value.trim();
     if (!name || !email || !message) return;
+
+    let subject = `New project inquiry from ${name} — ${service}`;
+    const extras = [];
+    if (qty) extras.push(`Qty: ${qty}`);
+    if (needBy) extras.push(`needed by ${needBy}`);
+    if (extras.length) subject += ` (${extras.join(", ")})`;
 
     const submitBtn = form.querySelector('button[type="submit"]');
 
@@ -241,25 +276,27 @@ function initContactForm() {
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify({
             access_key: WEB3FORMS_ACCESS_KEY,
-            subject: `New project inquiry from ${name} — ${service}`,
+            subject,
             from_name: "Blue Sky Sales website",
             name,
             phone: phone || "n/a",
             email,
             "Project Type": service,
+            Quantity: qty || "n/a",
+            "Needed By": needBy || "n/a",
             message
           })
         });
         const data = await res.json();
         if (data.success) {
-          hint.textContent = "Thanks! Your request has been sent to Blue Sky Sales — we'll follow up within one business day.";
-          form.reset();
+          hint.textContent = "";
+          showSuccess();
         } else {
           throw new Error(data.message || "Submission failed");
         }
       } catch (err) {
         hint.textContent = "Something went wrong sending that automatically — opening your email app instead.";
-        const mailto = `mailto:${QUOTE_EMAIL}?subject=${encodeURIComponent(`New project inquiry from ${name} — ${service}`)}&body=${encodeURIComponent(`Name: ${name}\nPhone: ${phone || "n/a"}\nEmail: ${email}\nProject Type: ${service}\n\nDetails:\n${message}`)}`;
+        const mailto = `mailto:${QUOTE_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nPhone: ${phone || "n/a"}\nEmail: ${email}\nProject Type: ${service}\nQuantity: ${qty || "n/a"}\nNeeded By: ${needBy || "n/a"}\n\nDetails:\n${message}`)}`;
         window.location.href = mailto;
       } finally {
         submitBtn.disabled = false;
@@ -268,12 +305,13 @@ function initContactForm() {
     }
 
     // Fallback while no Web3Forms key is configured yet.
-    const subject = `New project inquiry from ${name} — ${service}`;
     const body = [
       `Name: ${name}`,
       `Phone: ${phone || "n/a"}`,
       `Email: ${email}`,
       `Project Type: ${service}`,
+      `Quantity: ${qty || "n/a"}`,
+      `Needed By: ${needBy || "n/a"}`,
       "",
       "Details:",
       message
@@ -283,6 +321,7 @@ function initContactForm() {
 
     hint.textContent = "Thanks! Your email app should open with your message ready to send to Blue Sky Sales.";
     form.reset();
+    if (revealFields) revealFields.classList.remove("shown");
   });
 }
 

@@ -294,41 +294,64 @@
       </ul>
     </div>
 
-    <form class="contact-form" id="contactForm">
-      <div class="form-field">
-        <label for="cName">Name</label>
-        <input type="text" id="cName" name="name" required>
-      </div>
-      <div class="form-row">
+    <div class="contact-form-wrap">
+      <form class="contact-form" id="contactForm">
         <div class="form-field">
-          <label for="cPhone">Phone</label>
-          <input type="tel" id="cPhone" name="phone">
+          <label for="cName">Name</label>
+          <input type="text" id="cName" name="name" required>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="cPhone">Phone</label>
+            <input type="tel" id="cPhone" name="phone">
+          </div>
+          <div class="form-field">
+            <label for="cEmail">Email</label>
+            <input type="email" id="cEmail" name="email" required>
+          </div>
         </div>
         <div class="form-field">
-          <label for="cEmail">Email</label>
-          <input type="email" id="cEmail" name="email" required>
+          <label for="cService">Project Type</label>
+          <select id="cService" name="service">
+            <option value="">Select one...</option>
+            <option>Toilet Partitions / Washroom Accessories</option>
+            <option>Access Doors / Roof Hatches</option>
+            <option>Trash / Linen Chutes</option>
+            <option>Fixed Access Ladders</option>
+            <option>Fire Extinguishers</option>
+            <option>Fire Protection</option>
+            <option>Service / Repair on Existing Install</option>
+            <option>Not Sure Yet</option>
+          </select>
         </div>
+        <div class="reveal-fields" id="contactRevealFields">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cQty">Quantity <span class="form-tag">Helps us quote faster</span></label>
+              <input type="text" id="cQty" name="qty" placeholder="e.g., 24 units">
+            </div>
+            <div class="form-field">
+              <label for="cNeedBy">Needed By</label>
+              <input type="text" id="cNeedBy" name="needBy" placeholder="e.g., Oct 15">
+            </div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="cMessage">Project Details</label>
+          <textarea id="cMessage" name="message" rows="4" required placeholder="Tell us about your project, timeline, and budget range."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Request Your Free Estimate &rarr;</button>
+        <p class="form-sla">We'll confirm availability and pricing within one business day.</p>
+        <p class="form-hint" id="contactFormHint"></p>
+      </form>
+
+      <div class="form-success" id="contactFormSuccess">
+        <div class="form-success-icon">&check;</div>
+        <h3>Request Sent</h3>
+        <p>Thanks &mdash; your request is on its way to Blue Sky Sales. We'll confirm availability and pricing within one business day.</p>
+        <button type="button" class="form-restart" id="contactFormRestart">&larr; Send Another Request</button>
       </div>
-      <div class="form-field">
-        <label for="cService">Project Type</label>
-        <select id="cService" name="service">
-          <option>Toilet Partitions / Washroom Accessories</option>
-          <option>Access Doors / Roof Hatches</option>
-          <option>Trash / Linen Chutes</option>
-          <option>Fixed Access Ladders</option>
-          <option>Fire Extinguishers</option>
-          <option>Fire Protection</option>
-          <option>Service / Repair on Existing Install</option>
-          <option>Not Sure Yet</option>
-        </select>
-      </div>
-      <div class="form-field">
-        <label for="cMessage">Project Details</label>
-        <textarea id="cMessage" name="message" rows="4" required placeholder="Tell us about your project, timeline, and budget range."></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
-      <p class="form-hint" id="contactFormHint"></p>
-    </form>
+    </div>
   </div>
 </section>
 
