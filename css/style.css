@@ -324,6 +324,27 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
 .pdf-modal-bar span { font-weight: 700; font-size: .95rem; }
 .pdf-modal-actions { display: flex; align-items: center; gap: .9em; flex-shrink: 0; }
 .pdf-modal-actions .btn-sm { padding: .5em 1.1em; font-size: .85rem; white-space: nowrap; }
+.pdf-modal-actions .btn-outline { background: transparent; color: #cfe4f7; border-color: #cfe4f7; }
+.pdf-modal-actions .btn-outline:hover { background: #cfe4f7; color: var(--sky-900); }
+
+.ll-sent-note {
+  font-size: .78rem; font-weight: 700; color: #cfe4f7; white-space: nowrap;
+  opacity: 0; transform: translateX(-4px); transition: all .25s ease;
+}
+.ll-sent-note.show { opacity: 1; transform: translateX(0); }
+
+.ll-email-form { display: flex; align-items: center; gap: .5em; animation: llCaptureIn .25s ease; }
+@keyframes llCaptureIn { from { opacity: 0; transform: translateX(6px); } to { opacity: 1; transform: translateX(0); } }
+.ll-email-form input {
+  padding: .5em .8em; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.35); background: rgba(255,255,255,.08);
+  color: #fff; font-family: var(--font-body); font-size: .85rem; width: 190px;
+}
+.ll-email-form input::placeholder { color: rgba(255,255,255,.55); }
+.ll-email-form input:focus { outline: none; border-color: var(--sun-500); background: rgba(255,255,255,.14); }
+.ll-email-cancel {
+  background: none; border: none; color: rgba(255,255,255,.6); font-size: 1rem; cursor: pointer; padding: .2em .3em; line-height: 1;
+}
+.ll-email-cancel:hover { color: #fff; }
 .pdf-modal-close {
   background: none; border: none; color: var(--white); font-size: 1.2rem; line-height: 1;
   cursor: pointer; padding: .3em; opacity: .85;
@@ -372,6 +393,8 @@ code { background: var(--sky-100); padding: .15em .45em; border-radius: 6px; fon
   .pdf-modal-actions .btn-sm { font-size: .78rem; padding: .45em .85em; }
   .pdf-modal-body { padding: 1.1em 1em 2em; }
   .ll-grid { grid-template-columns: 1fr; }
+  .ll-email-form input { width: 120px; }
+  .ll-sent-note { width: 100%; order: 5; }
 }
 
 /* Scroll reveal — fade/slide content in as it enters the viewport */

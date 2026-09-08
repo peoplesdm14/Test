@@ -36,6 +36,14 @@ The contact form submits in the background with no email app popup, straight to 
 3. Paste that key into the `WEB3FORMS_ACCESS_KEY` constant near the top of `js/script.js` (in the "Contact form: silent send" section).
 Until that key is set, the form automatically falls back to opening the visitor's email app instead (pre-filled to Wendy), so the site keeps working either way.
 
+## "Email Me" on the Line List (EmailJS)
+The Line List modal ("Browse Our Full Line List") has an "Email Me" button next to Download — a visitor types their own email and gets the full list sent to them. This is the opposite direction from the quote form (site → visitor, not visitor → Wendy), so Web3Forms can't handle it; it only relays submissions to one fixed inbox. This needs [EmailJS](https://www.emailjs.com) instead:
+1. Sign up at https://www.emailjs.com and connect/verify `wendy@blueskysalesinc.com` as the sending account.
+2. Create an email template and attach `documents/blue-sky-sales-line-list.pdf` to it directly (the same file every time — the subject/body text are filled in dynamically, the attachment is static).
+3. Paste the Public Key, Service ID, and Template ID into the `EMAILJS_PUBLIC_KEY`, `EMAILJS_SERVICE_ID`, and `EMAILJS_TEMPLATE_ID` constants near the top of `js/script.js` (in the "Email Me" section).
+4. Add the EmailJS SDK script tag to `index.html`'s `<head>` (EmailJS's dashboard gives you the exact `<script>` snippet to paste in) so the `emailjs.send(...)` call in `js/script.js` has something to call.
+Until those keys are set, "Email Me" falls back to opening the visitor's own email app pre-addressed to what they typed — they can still send it themselves, just without the PDF automatically attached (a plain `mailto:` link can never attach a file; that's a browser/email-standard limit, not something code can work around).
+
 ## Running locally
 No build step needed. Just open `index.html` in a browser, or serve the folder:
 ```

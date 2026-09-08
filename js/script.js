@@ -87,6 +87,20 @@ const sampleReviews = [
 const OWNER_EMAIL = "peoplesdm14@gmail.com"; // reviews submitted via the review form go here
 const QUOTE_EMAIL = "wendy@blueskysalesinc.com"; // "Request a Free Estimate" / contact form inquiries go here
 
+/* -----------------------------------------------------------
+   "Email Me" on the Line List sends OUT to whatever address a visitor
+   types in — the opposite direction from the quote form (which sends IN
+   to QUOTE_EMAIL). Web3Forms can't do that; it only relays visitor→owner.
+   EmailJS (https://www.emailjs.com) is built for this: sign up, verify
+   wendy@blueskysalesinc.com as the sending account, create a template
+   with the line list PDF attached, and paste the three IDs below. Until
+   then this falls back to opening the visitor's own email app, same
+   pattern as WEB3FORMS_ACCESS_KEY above.
+   ----------------------------------------------------------- */
+const EMAILJS_PUBLIC_KEY = "";
+const EMAILJS_SERVICE_ID = "";
+const EMAILJS_TEMPLATE_ID = "";
+
 /* ---------------- Gallery render ---------------- */
 function renderGallery() {
   const grid = document.getElementById("galleryGrid");
@@ -370,10 +384,82 @@ function initLineListModal() {
   const searchInput = document.getElementById("lineListSearch");
   const emptyState = document.getElementById("lineListEmpty");
   const clearBtn = document.getElementById("lineListClear");
+  const emailCapture = document.getElementById("lineListEmailCapture");
+  const sentNote = document.getElementById("lineListSentNote");
   if (!trigger || !modal || !grid || !chipsEl || !searchInput) return;
 
   let activeCategory = null;
   let built = false;
+  let sentNoteTimer = null;
+
+  function buildLineListEmail() {
+    const subject = "Blue Sky Sales, Inc. - Line List";
+    const bodyLines = [
+      "Thank you for your interest in Blue Sky Sales, Inc.",
+      "",
+      "Attached is your requested copy of our full line list, covering everything we sell, install, and service.",
+      "",
+      "If you have any questions or would like a quote, we're happy to help.",
+      "",
+      "Blue Sky Sales, Inc.",
+      "(972) 288-7766 · wendy@blueskysalesinc.com",
+      "806 Dalworth Dr, Mesquite, TX 75149"
+    ];
+    return { subject, body: bodyLines.join("\n") };
+  }
+
+  function showEmailButton() {
+    emailCapture.innerHTML = `<button type="button" class="btn btn-outline btn-sm" id="lineListEmailBtn">✉ Email Me</button>`;
+    document.getElementById("lineListEmailBtn").addEventListener("click", showEmailForm);
+  }
+
+  function showEmailForm() {
+    emailCapture.innerHTML = `
+      <form class="ll-email-form" id="lineListEmailForm">
+        <input type="email" id="lineListEmailInput" placeholder="you@company.com" required>
+        <button type="submit" class="btn btn-primary btn-sm">Send</button>
+        <button type="button" class="ll-email-cancel" id="lineListEmailCancel" aria-label="Cancel">✕</button>
+      </form>
+    `;
+    const form = document.getElementById("lineListEmailForm");
+    const input = document.getElementById("lineListEmailInput");
+    input.focus();
+
+    document.getElementById("lineListEmailCancel").addEventListener("click", showEmailButton);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const toEmail = input.value.trim();
+      if (!toEmail) return;
+
+      const { subject, body } = buildLineListEmail();
+
+      if (EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
+        // Real silent send: EmailJS relays this straight to `toEmail` with
+        // the line list PDF attached inside the template — no popup, no
+        // mailto. (Requires the EmailJS SDK script tag once keys are set.)
+        try {
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_email: toEmail,
+            subject,
+            message: body
+          }, EMAILJS_PUBLIC_KEY);
+        } catch (err) {
+          window.location.href = `mailto:${encodeURIComponent(toEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+      } else {
+        // Fallback while no EmailJS keys are configured yet: opens the
+        // visitor's own email app pre-addressed to what they typed.
+        window.location.href = `mailto:${encodeURIComponent(toEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      }
+
+      showEmailButton();
+      clearTimeout(sentNoteTimer);
+      sentNote.textContent = `✓ Sent to ${toEmail}`;
+      sentNote.classList.add("show");
+      sentNoteTimer = setTimeout(() => sentNote.classList.remove("show"), 4000);
+    });
+  }
 
   function renderChips() {
     const allChip = `<button type="button" class="ll-chip active" data-category="">All Categories</button>`;
@@ -426,6 +512,7 @@ function initLineListModal() {
     if (!built) {
       renderChips();
       renderResults();
+      showEmailButton();
       built = true;
     }
     searchInput.focus();
